@@ -70,7 +70,6 @@ const DriverProfile = () => {
         })
         .catch((error) => {
           console.error('Error checking driver profile:', error);
-          alert('Error checking driver profile. Please check the console for details.');
         });
     }
   }, [isAuthenticated, user]);
@@ -89,7 +88,6 @@ const DriverProfile = () => {
         setAvatar(storageImageUrl);
       } catch (error) {
         console.error('Error updating avatar:', error);
-        alert('Error updating avatar. Please check the console for details.');
       }
     }
   };

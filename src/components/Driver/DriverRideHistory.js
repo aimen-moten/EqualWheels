@@ -1,8 +1,11 @@
 import React from 'react'
+import DriverHeader from './DriverHeader'
 
 const DriverRideHistory = () => {
   return (
-    <div>DriverRideHistory</div>
+    <div>
+    <DriverHeader/>
+    </div>
   )
 }
 

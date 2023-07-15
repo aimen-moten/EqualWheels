@@ -6,7 +6,6 @@ import Logo from '../assets/logo.png';
 
 const Hero = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
-
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center">
       <div className="car-animation" />
