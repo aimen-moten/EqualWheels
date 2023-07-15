@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { RiLogoutCircleLine } from 'react-icons/ri';
+import Logo from '../assets/logo.png';
 
 const Hero = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -18,7 +19,7 @@ const Hero = () => {
             <RiLogoutCircleLine size={24} />
           </button>
         )}
-        <img src="/logo.png" alt="Equal Wheels Logo" className="w-24 h-24 mb-4" />
+        <img src={Logo} alt="Equal Wheels Logo" className="w-50 h-50 mb-4" />
         <h1 className="text-4xl font-bold text-center mb-6 text-yellow-600">Welcome to Equal Wheels</h1>
         <p className="text-gray-100 text-center mb-8">
           Your Trusted Ride-Sharing Platform. Book a ride now and experience the best service.
