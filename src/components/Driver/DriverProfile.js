@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { FaUser, FaMapMarkerAlt, FaCheckCircle, FaPlusCircle } from 'react-icons/fa';
+import { FaUser, FaPlusCircle } from 'react-icons/fa';
 import DriverHeader from './DriverHeader';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, push, query, update, get, orderByChild, equalTo } from 'firebase/database';
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'; // Add getDownloadURL import
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDmNXdETFpXH7NT9kTmZop4laKyjdWkXwE",
+  authDomain: "equalwheels.firebaseapp.com",
+  projectId: "equalwheels",
+  storageBucket: "equalwheels.appspot.com",
+  messagingSenderId: "749969494574",
+  appId: "1:749969494574:web:7bc950fbf7fa1bd63e05bf",
+  measurementId: "G-BHCM6N5K8R"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 const DriverProfile = () => {
+  
   const { isAuthenticated, user } = useAuth0();
   const [avatar, setAvatar] = useState(null);
   const [gender, setGender] = useState('');
-  const [location, setLocation] = useState('');  const [availability, setAvailability] = useState({
+  const [location, setLocation] = useState('');
+  const [availability, setAvailability] = useState({
     monday: [{ from: '', to: '' }],
     tuesday: [{ from: '', to: '' }],
     wednesday: [{ from: '', to: '' }],
@@ -17,9 +35,65 @@ const DriverProfile = () => {
     sunday: [{ from: '', to: '' }],
   });
   
-  const handleUpdateAvatar = (newAvatar) => {
+  useEffect(() => {
+    // loading the profile data of driver
+    if (isAuthenticated && user && user.email) {
+      const driversRef = ref(db, 'drivers');
+      const emailQuery = query(driversRef, orderByChild('email'), equalTo(user.email));
+
+      get(emailQuery)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            // if driver exist fetch data
+            const driverData = snapshot.val();
+            const driverKey = Object.keys(driverData)[0];
+            const driverProfile = driverData[driverKey];
+            setAvatar(driverProfile.avatar);
+            setGender(driverProfile.gender);
+            setLocation(driverProfile.location);
+            setAvailability(driverProfile.availability);
+          } else {
+            //if driver doesn't exist
+            setAvatar(null);
+            setGender('');
+            setLocation('');
+            setAvailability({
+              monday: [{ from: '', to: '' }],
+              tuesday: [{ from: '', to: '' }],
+              wednesday: [{ from: '', to: '' }],
+              thursday: [{ from: '', to: '' }],
+              friday: [{ from: '', to: '' }],
+              saturday: [{ from: '', to: '' }],
+              sunday: [{ from: '', to: '' }],
+            });
+          }
+        })
+        .catch((error) => {
+          console.error('Error checking driver profile:', error);
+          alert('Error checking driver profile. Please check the console for details.');
+        });
+    }
+  }, [isAuthenticated, user]);
+
+  const handleUpdateAvatar = async (newAvatar) => {
     setAvatar(newAvatar);
+  
+    if (isAuthenticated && user && user.email) {
+      const storage = getStorage();
+      const storageReference = storageRef(storage, `avatars/${user.email}`);
+      try {
+        const response = await fetch(newAvatar);
+        const blob = await response.blob();
+        await uploadBytes(storageReference, blob);
+        const avatarUrl = await getDownloadURL(storageReference);
+        setAvatar(avatarUrl); 
+      } catch (error) {
+        console.error('Error updating avatar:', error);
+        alert('Error updating avatar. Please check the console for details.');
+      }
+    }
   };
+  
 
   const handleUpdateGender = (newGender) => {
     setGender(newGender);
@@ -38,13 +112,68 @@ const DriverProfile = () => {
       [day]: [...prevAvailability[day], { from: '', to: '' }],
     }));
   };
+
   const handleUpdateLocation = (newLocation) => {
     setLocation(newLocation);
   };
+
+  const handleSaveProfile = () => {
+    if (!isAuthenticated) {
+      return;
+    }
+
+    const driverData = {
+      avatar,
+      gender,
+      location,
+      availability,
+      user,
+      email: user.email,
+    };
+
+    const driversRef = ref(db, 'drivers');
+    const emailQuery = query(driversRef, orderByChild('email'), equalTo(user.email));
+
+  get(emailQuery)
+    .then((snapshot) => {
+      // If the driver with the email exists, update the existing record
+      if (snapshot.exists()) {
+        const driverKey = Object.keys(snapshot.val())[0];
+        const driverRefToUpdate = ref(db, `drivers/${driverKey}`);
+
+        // update the existing driver record
+        update(driverRefToUpdate, driverData)
+          .then(() => {
+            alert('Driver profile updated successfully!');
+          })
+          .catch((error) => {
+            console.error('Error updating driver profile:', error);
+            alert('Error updating driver profile. Please check the console for details.');
+          });
+      } else {
+        // if the driver with the email does not exist, add a new record
+        push(driversRef, driverData)
+          .then(() => {
+            alert('Driver profile added successfully!');
+          })
+          .catch((error) => {
+            console.error('Error adding driver profile:', error);
+            alert('Error adding driver profile. Please check the console for details.');
+          });
+      }
+    })
+    .catch((error) => {
+      console.error('Error checking driver profile:', error);
+      alert('Error checking driver profile. Please check the console for details.');
+    });
+};
+
+
   return (
     <div className="bg-gray-900 min-h-screen justify-center items-center">
-    <DriverHeader />
-      <div className=" max-wd-300 p-8 rounded-lg bg-gray-900"> 
+      <DriverHeader />
+      <div className="max-wd-300 p-8 rounded-lg bg-gray-900">
+
         {isAuthenticated && (
           <div className="text-right">
             <p className="text-white">Welcome, {user.name}!</p>
@@ -166,8 +295,13 @@ const DriverProfile = () => {
                 ))}
               </tbody>
             </table>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
+              onClick={handleSaveProfile}
+            >
+              Save Profile
+            </button>
           </div>
-  
         </div>
       </div>
     </div>

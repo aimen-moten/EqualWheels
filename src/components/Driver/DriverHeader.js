@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaCar, FaClipboardList, FaCheck, FaWallet, FaBell, FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { FaCar, FaClipboardList, FaCheck, FaWallet, FaBell, FaUser, FaSignOutAlt, FaHome } from 'react-icons/fa';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const DriverHeader = () => {
@@ -17,6 +17,10 @@ const DriverHeader = () => {
           Equal Wheels
         </Link>
         <div className="space-x-4">
+        <Link to="/driver-home" className="text-white hover:text-gray-300">
+            <FaHome className="inline-block mr-2" />
+           Home
+          </Link>
           <Link to="/driver-rides" className="text-white hover:text-gray-300">
             <FaCar className="inline-block mr-2" />
             My Rides
