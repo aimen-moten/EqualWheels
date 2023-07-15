@@ -10,6 +10,9 @@ const Hero = () => {
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center">
       <div className="car-animation" />
+      <div className="car-animation1" />
+      <div className="car-animation2" />
+      <div className="car-animation3" />
       <div className="p-6 border border-gray-800 rounded-lg max-w-sm bg-gray-800 text-gray-800 relative">
         {isAuthenticated && (
           <button

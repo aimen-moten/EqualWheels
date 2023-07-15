@@ -4,7 +4,7 @@
 
   .car-animation {
     position: absolute;
-    top: 3%;
+    top: 1%;
     left: -100px;
     width: 200px;
     height: 200px;
@@ -12,7 +12,36 @@
     background-size: contain;
     animation: moveCar 6s linear infinite;
   }
-  
+  .car-animation1{
+    position: absolute;
+    top: 40%;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    background-image: url('./assets/car4.gif');
+    background-size: contain;
+    animation: moveCar 7s linear infinite;
+  }
+  .car-animation2{
+    position: absolute;
+    top: 20%;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    background-image: url('./assets/car3.gif');
+    background-size: contain;
+    animation: moveCar 10s linear infinite;
+  }
+  .car-animation3{
+    position: absolute;
+    top: 60%;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    background-image: url('./assets/car5.gif');
+    background-size: contain;
+    animation: moveCar 10s linear infinite;
+  }
   @keyframes moveCar {
     0% {
       transform: translateX(0);
