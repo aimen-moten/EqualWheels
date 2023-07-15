@@ -17,6 +17,7 @@ import RiderPayments from "./components/Rider/RiderPayments";
 import RiderProfile from "./components/Rider/RiderProfile";
 import RiderRideHistory from "./components/Rider/RiderRideHistory";
 import Error from "./components/Error";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
       {/* 404 */}
       <Route path="*" element={<Error/>} />
     </Routes>
+    <div>
+      <Footer/>
+    </div>
    </Router>
    </div>
   );
