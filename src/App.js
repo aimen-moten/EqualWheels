@@ -18,6 +18,7 @@ import RiderProfile from "./components/Rider/RiderProfile";
 import RiderRideHistory from "./components/Rider/RiderRideHistory";
 import Error from "./components/Error";
 import Footer from "./components/Footer";
+import RideRequestPage from "./components/Rider/RideRequestPage";
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
       <Route path="/driver-ride-requests" element={<DriverRideRequests/>} exact/>
       {/* rider */}
       <Route path="/rider-details" element={<RideDetails/>} exact/>
-      <Route path="/rider-request-form" element={<RideRequestForm/>} exact/>
+      <Route path="/rider-request-form" element={<RideRequestPage/>} exact/>
       <Route path="/rider-header" element={<RiderHeader/>} exact/>
       <Route path="/rider-home" element={<RiderHome/>} exact/>
       <Route path="/rider-notifications" element={<RiderNotifications/>} exact/>

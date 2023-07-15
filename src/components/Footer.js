@@ -8,7 +8,7 @@ const Footer = () => {
     <img key={index} src={CarImage} alt="Car" className="w-14 h-14 mx-1" />
   ));
   return (
-    <footer className="bg-gray-900 py-8 text-white">
+    <footer className="bg-gray-800 py-8 text-white">
       <div className="container mx-auto flex items-center justify-center">
         <div className="flex items-center justify-center">{carImages}</div>
       </div>
