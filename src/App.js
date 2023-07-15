@@ -1,21 +1,17 @@
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Hero from "./components/Hero";
+import DriverProfile from "./components/Driver/DriverProfile";
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <div>
+   <Router>
+    <Routes>
+      <Route path="/" element={<Hero/>} exact/>
+      <Route path="/driver-profile" element={<DriverProfile/>} exact/>
+    </Routes>
+   </Router>
+   </div>
   );
 }
 
