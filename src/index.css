@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+  .car-animation {
+    position: absolute;
+    top: 3%;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    background-image: url('./assets/car.gif');
+    background-size: contain;
+    animation: moveCar 6s linear infinite;
+  }
+  
+  @keyframes moveCar {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(100vw + 100px));
+    }
+  }
