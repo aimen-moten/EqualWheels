@@ -14,8 +14,8 @@ const DriverHome = () => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-74.5, 40], 
-      zoom: 9, 
+      center: [-74.5, 40],
+      zoom: 9,
     });
 
     if (navigator.geolocation) {
@@ -29,7 +29,7 @@ const DriverHome = () => {
 
   return (
     <div className="bg-gray-900 min-h-screen">
-    <DriverHeader/>
+      <DriverHeader />
       <div className="container mx-auto py-8">
         {isAuthenticated && (
           <div className="text-right">
@@ -56,7 +56,11 @@ const DriverHome = () => {
               <FaCar size={36} className="text-yellow-500 mr-2" />
               <h2 className="text-lg font-semibold text-white">Total Rides</h2>
             </div>
-            <div className="h-40 bg-white rounded-lg" />
+            <div className="h-40 bg-white rounded-lg" >
+              <div className="h-40  flex items-center justify-center text-4xl font-bold text-gray-800">
+                {Math.round(Math.random() * 100)}
+              </div>
+            </div>
           </div>
 
           <div className="col-span-12 md:col-span-6 lg:col-span-3 p-4 bg-gray-800 rounded-lg">
@@ -64,7 +68,11 @@ const DriverHome = () => {
               <FaCar size={36} className="text-green-500 mr-2" />
               <h2 className="text-lg font-semibold text-white">Completed Rides</h2>
             </div>
-            <div className="h-40 bg-white rounded-lg" />
+            <div className="h-40 bg-white rounded-lg" >
+              <div className="h-40  flex items-center justify-center text-4xl font-bold text-gray-800">
+                {Math.round(Math.random() * 100)}
+              </div>
+            </div>
           </div>
 
           <div className="col-span-12 md:col-span-6 lg:col-span-3 p-4 bg-gray-800 rounded-lg">
@@ -72,7 +80,11 @@ const DriverHome = () => {
               <FaCar size={36} className="text-red-500 mr-2" />
               <h2 className="text-lg font-semibold text-white">Cancelled Rides</h2>
             </div>
-            <div className="h-40 bg-white rounded-lg" />
+            <div className="h-40 bg-white rounded-lg" >
+              <div className="h-40  flex items-center justify-center text-4xl font-bold text-gray-800">
+                {Math.round(Math.random() * 100)}
+              </div>
+            </div>
           </div>
         </div>
 
