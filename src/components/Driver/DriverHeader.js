@@ -13,7 +13,7 @@ const DriverHeader = () => {
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/driver-home" className="text-white text-xl font-bold">
+        <Link to="/" className="text-white text-xl font-bold">
           Equal Wheels
         </Link>
         <div className="space-x-4">
