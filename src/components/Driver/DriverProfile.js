@@ -85,8 +85,8 @@ const DriverProfile = () => {
         const response = await fetch(newAvatar);
         const blob = await response.blob();
         await uploadBytes(storageReference, blob);
-        const avatarUrl = await getDownloadURL(storageReference);
-        setAvatar(avatarUrl); 
+        const storageImageUrl = `https://storage.googleapis.com/${firebaseConfig.storageBucket}/${storageReference.fullPath}`;
+        setAvatar(storageImageUrl);
       } catch (error) {
         console.error('Error updating avatar:', error);
         alert('Error updating avatar. Please check the console for details.');
