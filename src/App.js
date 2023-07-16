@@ -19,6 +19,7 @@ import RiderRideHistory from "./components/Rider/RiderRideHistory";
 import Error from "./components/Error";
 import Footer from "./components/Footer";
 import RideRequestPage from "./components/Rider/RideRequestPage";
+import Submitted from "./components/Rider/Submitted";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
       <Route path="/rider-payments" element={<RiderPayments/>} exact/>
       <Route path="/rider-profile" element={<RiderProfile/>} exact/>
       <Route path="/rider-history" element={<RiderRideHistory/>} exact/>
+      <Route path="/submitted" element={<Submitted/>} exact/>      
       {/* 404 */}
       <Route path="*" element={<Error/>} />
     </Routes>

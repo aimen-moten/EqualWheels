@@ -9,7 +9,9 @@ import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
+
 import DateTimePicker from 'react-datetime-picker'
+import { Link, Navigate } from 'react-router-dom';
 
 const RideRequestForm = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +26,11 @@ const RideRequestForm = () => {
      
       [name]: type === "checkbox" ? checked : value
     }))
+  }
+
+  function handleSubmit(event){
+    event.preventDefault();
+    
   }
   return (
     <div>
@@ -42,6 +49,7 @@ const RideRequestForm = () => {
             placeholder='Origin'
             value={formData.origin}
             onChange={handleChange}
+            required
           />
           <br/>
 
@@ -54,6 +62,7 @@ const RideRequestForm = () => {
             placeholder='Destination'
             value={formData.destination}
             onChange={handleChange}
+            required
           />
           <br/>
           <label>Schedule For Later?</label>
@@ -64,10 +73,12 @@ const RideRequestForm = () => {
             placeholder='Schedule For Later?'
             value={formData.forLater}
             onChange={handleChange}
+        
           />
-
-          <DateTimePicker onChange={handleChange} value={formData.date} name='date' />
-          
+          {formData.forLater ? <DateTimePicker onChange={(event)=>{setFormData(prevFormData => ({...prevFormData, date: event}))}} value={formData.date} name='date' /> : null}
+          <br/>
+          <br/>
+          <Link to="/submitted"><button className='p-2 bg-white text-gray-800 rounded-lg font-bold mb-8' onSubmit={handleSubmit} >Submit Request</button></Link>
 
           
         </form>

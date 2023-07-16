@@ -178,7 +178,7 @@ const RiderHome = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="flex justify-center space-x-4"
           >
-            <Link to="/driver-rides">
+            <Link to="/rider-history">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -187,7 +187,7 @@ const RiderHome = () => {
                 Manage Rides
               </motion.button>
             </Link>
-            <Link to="/driver-profile">
+            <Link to="/rider-profile">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
