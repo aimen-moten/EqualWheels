@@ -1,6 +1,10 @@
+<div>
 <div align='center'>
-
-<h2>Create a ride-sharing app that focuses on empowering and supporting marginalized genders in accessing safe, reliable, and affordable transportation options. The app aims to provide a platform where women and marginalized genders can feel confident and secure when using transportation services, whether as drivers or passengers.</h2>
+<h1>EQUAL WHEELS</h1>
+<img src = "https://github.com/aimen-moten/EqualWheels/assets/80088403/dbb0a07f-433b-43a9-952b-d5c6054a67a2"/>
+<h1>Problem Statmeent</h1>
+</div>
+<p>Create a ride-sharing app that focuses on empowering and supporting marginalized genders in accessing safe, reliable, and affordable transportation options. The app aims to provide a platform where women and marginalized genders can feel confident and secure when using transportation services, whether as drivers or passengers.</p>
 <h1>Features</h1>
 <p>Features:
 
