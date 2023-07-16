@@ -3,6 +3,110 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import Logo from '../assets/logo.png';
+import ChatBot from 'react-simple-chatbot';
+import { ThemeProvider } from 'styled-components';
+import botAvatar from '../assets/bot.png';
+import { motion } from 'framer-motion';
+
+const config = {
+  botAvatar:botAvatar,
+  floating: true,
+};
+
+const steps = [
+  {
+    id: '0',
+    message: 'Hey!',
+    trigger: '1',
+  },
+  {
+    id: '1',
+    message: 'Please write your username',
+    trigger: '2',
+  },
+  {
+    id: '2',
+    user: true,
+    trigger: '3',
+  },
+  {
+    id: '3',
+    message: 'Hi {previousValue}, how can I help you?',
+    trigger: 'options',
+  },
+  {
+    id: 'options',
+    options: [
+      { value: 'sos', label: 'SOS' },
+      { value: 'faqs', label: 'FAQs' },
+      { value: 'greeting', label: 'Send a greeting' },
+    ],
+  },
+  {
+    id: 'sos',
+    message: 'SOS Request',
+    trigger: 'sosOptions',
+  },
+  {
+    id: 'sosOptions',
+    options: [
+      {
+        value: 'callPolice',
+        label: 'Contact Nearby Police Station',
+        trigger: 'contactPolice',
+      },
+      {
+        value: 'shareLocation',
+        label: 'Share Your Location',
+        trigger: 'shareLocationMsg',
+      },
+      {
+        value: 'cancelSos',
+        label: 'Cancel SOS',
+        trigger: 'cancelSosMsg',
+      },
+    ],
+  },
+  {
+    id: 'contactPolice',
+    message: 'Contacting the nearby police station...',
+    end: true,
+  },
+  {
+    id: 'shareLocationMsg',
+    message: 'Please share your location with us for assistance.',
+    end: true,
+  },
+  {
+    id: 'cancelSosMsg',
+    message: 'SOS request canceled.',
+    end: true,
+  },
+  {
+    id: 'faqs',
+    message: 'Frequently Asked Questions:\n1. How do I book a ride?\n2. How can I become a driver?\n3. What payment methods do you accept?',
+    end: true,
+  },
+  {
+    id: 'greeting',
+    message: 'Hello there! 🎉',
+    end: true,
+  },
+];
+
+
+const theme = {
+  background: '#F8F7FC', 
+  fontFamily: 'Helvetica Neue, sans-serif',
+  headerBgColor: '#8D4B91',
+  headerFontColor: '#fff',
+  headerFontSize: '22px',
+  botBubbleColor: '#4C51BF',
+  botFontColor: '#fff',
+  userBubbleColor: '#F59E0B', 
+  userFontColor: '#fff',
+};
+
 
 const Hero = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -58,6 +162,19 @@ const Hero = () => {
           )}
         </div>
       </div>
+      <ThemeProvider theme={theme}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <ChatBot
+            headerTitle="Equal Wheels Bot"
+            steps={steps}
+            {...config}
+          />
+        </motion.div>
+      </ThemeProvider>
     </div>
   );
 };
