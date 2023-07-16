@@ -132,7 +132,7 @@ const DriverHome = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="flex justify-center space-x-4"
           >
-            <Link to="/driver-rides">
+            <Link to="/driver-ride-requests">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

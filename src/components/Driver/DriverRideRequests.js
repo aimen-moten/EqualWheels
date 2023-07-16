@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import DriverHeader from './DriverHeader';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, push, query, update, get, orderByChild, equalTo } from 'firebase/database';
+import { useAuth0 } from '@auth0/auth0-react';
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDmNXdETFpXH7NT9kTmZop4laKyjdWkXwE",
+  authDomain: "equalwheels.firebaseapp.com",
+  projectId: "equalwheels",
+  storageBucket: "equalwheels.appspot.com",
+  messagingSenderId: "749969494574",
+  appId: "1:749969494574:web:7bc950fbf7fa1bd63e05bf",
+  measurementId: "G-BHCM6N5K8R"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 const DriverRideRequests = () => {
+  const { user } = useAuth0();
   const [rideRequests, setRideRequests] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedRequestIndex, setSelectedRequestIndex] = useState(null);
-
+  const [acceptedRides, setAcceptedRides] = useState([]);
+  
   useEffect(() => {
-    // Fetch random rider profiles and ride requests from the API
     fetch('https://randomuser.me/api/?results=30')
       .then((response) => response.json())
       .then((data) => {
-        // Process the API response to create ride request data
         const requests = data.results.map((user) => ({
           id: user.login.uuid,
           name: `${user.name.first} ${user.name.last}`,
@@ -35,13 +52,49 @@ const DriverRideRequests = () => {
   const handleAcceptRequest = (index) => {
     setSelectedRequestIndex(index);
     setShowPopup(true);
-  };
+    console.log(acceptedRides);
+    if (user && user.email) {
+      const driversRef = ref(db, 'drivers');
+      const driverQuery = query(driversRef, orderByChild('email'), equalTo(user.email));
+      get(driverQuery).then((snapshot) => {
+        if (snapshot.exists()) {
+          const driverData = snapshot.val();
+          const driverId = Object.keys(driverData)[0];
+          const driverAcceptedRides = driverData[driverId]?.acceptedRides || [];
+          setAcceptedRides([...driverAcceptedRides, rideRequests[index]]);
+          updateDriverAcceptedRides(driverId, [...driverAcceptedRides, rideRequests[index]]);
+        }
+      });
+    }else{
+      console.log("error");
+    }
+  }
 
   const handleCancelRequest = () => {
     setSelectedRequestIndex(null);
     setShowPopup(false);
+    if (user && user.email) {
+      const driversRef = ref(db, 'drivers');
+      const driverQuery = query(driversRef, orderByChild('email'), equalTo(user.email));
+      get(driverQuery).then((snapshot) => {
+        if (snapshot.exists()) {
+          const driverData = snapshot.val();
+          const driverId = Object.keys(driverData)[0];
+          const driverAcceptedRides = driverData[driverId]?.acceptedRides || [];
+          const updatedAcceptedRides = driverAcceptedRides.filter(
+            (ride) => ride.id !== rideRequests[selectedRequestIndex].id
+          );
+          setAcceptedRides(updatedAcceptedRides);
+          updateDriverAcceptedRides(driverId, updatedAcceptedRides);
+        }
+      });
+    }
   };
 
+  const updateDriverAcceptedRides = (driverId, newAcceptedRides) => {
+    const driverRef = ref(db, 'drivers/' + driverId);
+    update(driverRef, { acceptedRides: newAcceptedRides });
+  };
   return (
     <div className="bg-gray-900 min-h-screen text-white">
       <DriverHeader />

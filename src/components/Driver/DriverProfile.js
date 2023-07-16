@@ -74,24 +74,32 @@ const DriverProfile = () => {
     }
   }, [isAuthenticated, user]);
 
-  const handleUpdateAvatar = async (newAvatar) => {
-    setAvatar(newAvatar);
-  
-    if (isAuthenticated && user && user.email) {
-      const storage = getStorage();
-      const storageReference = storageRef(storage, `avatars/${user.email}`);
-      try {
-        const response = await fetch(newAvatar);
-        const blob = await response.blob();
-        await uploadBytes(storageReference, blob);
-        const storageImageUrl = `https://storage.googleapis.com/${firebaseConfig.storageBucket}/${storageReference.fullPath}`;
-        setAvatar(storageImageUrl);
-      } catch (error) {
-        console.error('Error updating avatar:', error);
+ const handleUpdateAvatar = async (newAvatar) => {
+  setAvatar(newAvatar);
+
+  if (isAuthenticated && user && user.email) {
+    const storage = getStorage();
+    const storageReference = storageRef(storage, `avatars/${user.email}`);
+    try {
+      const response = await fetch(newAvatar);
+      const blob = await response.blob();
+      await uploadBytes(storageReference, blob);
+
+      //public url of the storag
+      const downloadURL = await getDownloadURL(storageReference);
+
+      // update avatar
+      if (downloadURL) {
+        setAvatar(downloadURL);
+      } else {
+        console.error('Error getting download URL of the avatar image.');
       }
+    } catch (error) {
+      console.error('Error updating avatar:', error);
     }
-  };
-  
+  }
+};
+
 
   const handleUpdateGender = (newGender) => {
     setGender(newGender);
@@ -134,7 +142,7 @@ const DriverProfile = () => {
 
   get(emailQuery)
     .then((snapshot) => {
-      // If the driver with the email exists, update the existing record
+      // if the driver with the email exists, update the existing record
       if (snapshot.exists()) {
         const driverKey = Object.keys(snapshot.val())[0];
         const driverRefToUpdate = ref(db, `drivers/${driverKey}`);
