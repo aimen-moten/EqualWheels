@@ -38,6 +38,7 @@ const DriverHome = () => {
       });
     }
   };
+  
   return (
     <motion.div
     initial={{ opacity: 0 }}
@@ -111,7 +112,7 @@ const DriverHome = () => {
             </div>
             <div className="h-64 bg-white rounded-lg" >
               <div className="h-64  flex items-center justify-center text-4xl font-bold text-gray-800">
-                {Math.round(Math.random() * 100)}
+                {Math.round(Math.random() * 10)}
               </div>
             </div>
           </div>

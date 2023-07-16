@@ -21,7 +21,7 @@ const DriverHeader = () => {
             <FaHome className="inline-block mr-2" />
            Home
           </Link>
-          <Link to="/driver-rides" className="text-white hover:text-gray-300">
+          <Link to="/driver-ride-history" className="text-white hover:text-gray-300">
             <FaCar className="inline-block mr-2" />
             My Rides
           </Link>
