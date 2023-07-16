@@ -33,7 +33,7 @@ const RiderHeader = () => {
             <FaCheck className="inline-block mr-2" />
             Accepted Rides
           </Link> */}
-          <Link to="/rider-payments" className="text-white hover:text-gray-300">
+          <Link to="https://buy.stripe.com/test_14kaG70UHct3fWUaEE" className="text-white hover:text-gray-300">
             <FaWallet className="inline-block mr-2" />
             Payments
           </Link>
