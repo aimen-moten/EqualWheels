@@ -74,31 +74,28 @@ const DriverProfile = () => {
     }
   }, [isAuthenticated, user]);
 
- const handleUpdateAvatar = async (newAvatar) => {
-  setAvatar(newAvatar);
-
-  if (isAuthenticated && user && user.email) {
-    const storage = getStorage();
-    const storageReference = storageRef(storage, `avatars/${user.email}`);
-    try {
-      const response = await fetch(newAvatar);
-      const blob = await response.blob();
-      await uploadBytes(storageReference, blob);
-
-      //public url of the storag
-      const downloadURL = await getDownloadURL(storageReference);
-
-      // update avatar
-      if (downloadURL) {
-        setAvatar(downloadURL);
-      } else {
-        console.error('Error getting download URL of the avatar image.');
+  const handleUpdateAvatar = async (newAvatar) => {
+    setAvatar(newAvatar);
+  
+    if (isAuthenticated && user && user.email) {
+      const storage = getStorage();
+      const storageReference = storageRef(storage, `avatars/${user.email}`);
+      try {
+        const response = await fetch(newAvatar);
+        const blob = await response.blob();
+        await uploadBytes(storageReference, blob);
+          const downloadURL = await getDownloadURL(storageReference);
+          if (downloadURL) {
+          setAvatar(downloadURL);
+        } else {
+          console.error('Error getting download URL of the avatar image.');
+        }
+      } catch (error) {
+        console.error('Error updating avatar:', error);
       }
-    } catch (error) {
-      console.error('Error updating avatar:', error);
     }
-  }
-};
+  };
+  
 
 
   const handleUpdateGender = (newGender) => {
