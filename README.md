@@ -25,8 +25,9 @@
 8. Community Support: Create a community support system where users can share experiences, tips, and resources related to transportation safety.
 
 9. Accessibility: Ensure the app is accessible and user-friendly to accommodate a diverse range of users.
-    
-    
 </p>
+<h2>Tools and Technologies used</h2>
+     <img src="https://skillicons.dev/icons?i=github,git,react,tailwind,html,css,js,vscode,firebase"/>
+<p>
 
 </div>
