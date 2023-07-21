@@ -29,5 +29,5 @@
 <h2>Tools and Technologies used</h2>
      <img src="https://skillicons.dev/icons?i=github,git,react,tailwind,html,css,js,vscode,firebase"/>
 <p>
-
+(Devpost Link)[https://devpost.com/software/equal-wheels]
 </div>
